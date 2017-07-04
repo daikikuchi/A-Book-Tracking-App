@@ -28,16 +28,6 @@ state = {
       // })
       // }
 
-  //     updateBook(book,shelf) {
-  //     BooksAPI.update(book, shelf).then(book => {
-  //
-  //      // Let's try changing the shelf value on all books:
-  //      this.setState(state => ({
-  //      currentlyReading: state.currentlyReading.concat([ book ])
-  //      }))
-  //
-  //   })
-  // }
 
   updateBook(book, shelf) {
     let self = this
