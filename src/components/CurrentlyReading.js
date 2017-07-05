@@ -63,7 +63,7 @@ class CurrentlyReading extends Component {
           </div>
         </div>
         <div className="open-search">
-          <a onClick={() => this.setState({showSearchPage: true})}>Add a book</a>
+          <Link className="to-search" to="/search">Add a book</Link>
         </div>
       </div>
     )
