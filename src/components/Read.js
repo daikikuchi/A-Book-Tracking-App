@@ -24,10 +24,7 @@ class Read extends Component {
      this.setState({
             bookShelf: event.target.value
         });
-
-    }
-
-
+     }
 
  render() {
 

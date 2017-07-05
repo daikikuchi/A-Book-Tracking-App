@@ -13,8 +13,7 @@ class WantToRead extends Component {
   static propTypes = {
    books : PropTypes.array.isRequired
  }
-
- handleUpdate = (e,book) => {
+handleUpdate = (e,book) => {
     console.log(book)
     const select = e.target.value
     if (this.props.onUpdateBook)
