@@ -3,20 +3,12 @@ import PropTypes from 'prop-types'
 import Rating from './Rating'
 
 class Read extends Component {
-  constructor(props){
-     super(props);
 
-  this.state = { value: 'read' };
-
-  this.handleUpdate = this.handleUpdate.bind(this);
-  }
-
-   propTypes = {
+   static propTypes = {
    books : PropTypes.array.isRequired
  }
 
  handleUpdate = (e,book) => {
-    console.log(e.target.value)
     const select = e.target.value
     if (this.props.onUpdateBook)
      this.props.onUpdateBook(book, select)
@@ -41,7 +33,7 @@ class Read extends Component {
                           <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})`   }}></div>
                             <div className="book-shelf-changer">
-                              <select value={this.state.value} onChange={(event) => this.handleUpdate(event, book)}>
+                              <select value={book.shelf} onChange={(event) => this.handleUpdate(event, book)}>
                                 <option value="none" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>

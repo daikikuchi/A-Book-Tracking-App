@@ -7,21 +7,39 @@ class SearchBook extends Component {
 
   state = {
     query: '',
-    searchedBooks: []
+    books: [],
+
   }
 
-  updateQuery = (query) => {
-    this.setState({query: query.trim()})
-    BooksAPI.search(query, 20).then(books => this.setState(state => ({searchedBooks: books})))
+  execSearch = (query) => {
+     const search = this.currentSearch = BooksAPI.search(query, 20).then(books => {
+       // setState only for the currentSearch Results
+       // Without query search, this.curentSearch and search have value of null, With query they have promise
+      if (this.currentSearch === search)
+          this.setState({books:books})
+     })
+  }
 
+
+  updateQuery = (query) => {
+    this.currentSearch = null
+
+    if (query)
+      this.execSearch(query)
+
+      this.setState({
+        books: [],
+        query
+
+      })
   }
 
   render() {
 
     const {query} = this.state
-    let books = this.state.searchedBooks
+    let books = this.state.books
 
-    if (books === null || books.error) {
+    if (books === null && books.error) {
       books = []
     }
 

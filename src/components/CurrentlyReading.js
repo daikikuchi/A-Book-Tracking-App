@@ -10,7 +10,6 @@ class CurrentlyReading extends Component {
   }
 
   handleUpdate = (e, book) => {
-    console.log(book)
     const select = e.target.value
     if (this.props.onUpdateBook)
       this.props.onUpdateBook(book, select)
@@ -41,7 +40,7 @@ class CurrentlyReading extends Component {
                           backgroundImage: `url(${book.imageLinks.thumbnail})`
                         }}></div>
                         <div className="book-shelf-changer">
-                          <select onChange={(event) => this.handleUpdate(event, book)}>
+                          <select value={book.shelf} onChange={(event) => this.handleUpdate(event, book)}>
                             <option value="none" disabled>Move to...</option>
                             <option value="currentlyReading">Currently Reading</option>
                             <option value="wantToRead">Want to Read</option>
