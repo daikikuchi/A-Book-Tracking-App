@@ -13,9 +13,6 @@ class Read extends Component {
     if (this.props.onUpdateBook)
      this.props.onUpdateBook(book, select)
 
-     this.setState({
-            bookShelf: event.target.value
-        });
      }
 
  render() {

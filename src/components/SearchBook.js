@@ -1,25 +1,23 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
-import Bookshelf from './Bookshelf'
+import Book from './Book'
 import * as BooksAPI from '../BooksAPI'
 
 class SearchBook extends Component {
 
   state = {
     query: '',
-    books: [],
-
+    books: []
   }
 
   execSearch = (query) => {
-     const search = this.currentSearch = BooksAPI.search(query, 20).then(books => {
-       // setState only for the currentSearch Results
-       // Without query search, this.curentSearch and search have value of null, With query they have promise
+    const search = this.currentSearch = BooksAPI.search(query, 20).then(books => {
+      // setState only for the currentSearch Results
+      // Without query search, this.curentSearch and search have value of null, With query they have promise
       if (this.currentSearch === search)
-          this.setState({books:books})
-     })
+        this.setState({books: books})
+    })
   }
-
 
   updateQuery = (query) => {
     this.currentSearch = null
@@ -27,11 +25,7 @@ class SearchBook extends Component {
     if (query)
       this.execSearch(query)
 
-      this.setState({
-        books: [],
-        query
-
-      })
+    this.setState({books: [], query})
   }
 
   render() {
@@ -39,7 +33,7 @@ class SearchBook extends Component {
     const {query} = this.state
     let books = this.state.books
 
-    if (books === null && books.error) {
+    if (books === null || books.error) {
       books = []
     }
 
@@ -54,7 +48,7 @@ class SearchBook extends Component {
         <div className="search-books-results">
           <h1>Searching results for "{query}"</h1>
           <ol className="books-grid">
-            {books.map((book) => (<Bookshelf onUpdateBook={this.props.onUpdateBook} book={book} key={book.id}/>))}
+            {books.map((book) => (<Book onUpdateBook={this.props.onUpdateBook} isBookOnShelf={this.props.isBookOnShelf} book={book} key={book.id}/>))}
           </ol>
         </div>
       </div>
