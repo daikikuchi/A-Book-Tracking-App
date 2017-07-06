@@ -18,17 +18,27 @@ class BooksApp extends React.Component {
     books: []
   }
 
+  // updateBook(book, shelf) {
+  //   let self = this
+  //   BooksAPI.update(book, shelf).then(function() {
+  //     BooksAPI.getAll().then(books => self.setState({books: books}))
+  //   })
+  // }
+  // Check if selection shelf is different than current one
   updateBook(book, shelf) {
-    let self = this
-    BooksAPI.update(book, shelf).then(function() {
-      BooksAPI.getAll().then(books => self.setState({books: books}))
+  if (book.shelf !== shelf) {
+  BooksAPI.update(book, shelf).then(() => {
+    book.shelf = shelf  // Update selected book shelf with new chosen shelf
+    this.setState(state => ({
+    books: state.books.filter((b) => b.id !== book.id).concat([ book ])
+     }))
     })
   }
+}
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({books}) // sames as ({books: books })  ES6
-      console.log(this.state.books)
 
     })
   }
