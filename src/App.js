@@ -12,29 +12,39 @@ class BooksApp extends React.Component {
   constructor(props) {
     super(props)
     this.updateBook = this.updateBook.bind(this);
+    this.isBookOnShelf = this.isBookOnShelf.bind(this);
   }
 
   state = {
     books: []
   }
 
-  // updateBook(book, shelf) {
-  //   let self = this
-  //   BooksAPI.update(book, shelf).then(function() {
-  //     BooksAPI.getAll().then(books => self.setState({books: books}))
-  //   })
-  // }
-  // Check if selection shelf is different than current one
-  updateBook(book, shelf) {
-  if (book.shelf !== shelf) {
-  BooksAPI.update(book, shelf).then(() => {
-    book.shelf = shelf  // Update selected book shelf with new chosen shelf
-    this.setState(state => ({
-    books: state.books.filter((b) => b.id !== book.id).concat([ book ])
-     }))
-    })
+  isBookOnShelf(id) {
+    let searchedBooksOnShelf
+
+    if (this.state.books) {
+      searchedBooksOnShelf = this.state.books.filter((book) => book.id === id)
+      if (searchedBooksOnShelf.length !== 0) {
+        // console.log(searchedBooksOnShelf)
+        // console.log(searchedBooksOnShelf[0])
+        // console.log(searchedBooksOnShelf[0].shelf)
+        return searchedBooksOnShelf[0].shelf
+      } else {
+        return null
+      }
+    }
   }
-}
+
+  updateBook(book, shelf) {
+    if (book.shelf !== shelf) {
+      BooksAPI.update(book, shelf).then(() => {
+        book.shelf = shelf // Update selected book shelf with new chosen shelf
+        this.setState(state => ({
+          books: state.books.filter((b) => b.id !== book.id).concat([book])
+        }))
+      })
+    }
+  }
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
@@ -60,7 +70,7 @@ class BooksApp extends React.Component {
         <Route exact path="/" render={() => (<CurrentlyReading books={currentlyReading} onUpdateBook={this.updateBook}/>)}/>
         <Route exact path="/" render={() => (<WantToRead books={wantToRead} onUpdateBook={this.updateBook}/>)}/>
         <Route exact path="/" render={() => (<Read books={read} onUpdateBook={this.updateBook}/>)}/>
-        <Route path="/search" render={() => (<SearchBook onUpdateBook={this.updateBook}/>)}/>
+        <Route path="/search" render={() => (<SearchBook isBookOnShelf={this.isBookOnShelf} onUpdateBook={this.updateBook}/>)}/>
         <Route path="/rating" render={() => (<Rating/>)}/>
       </div>
     )
