@@ -1,10 +1,8 @@
 import React from 'react'
-import {Route} from 'react-router-dom'
+import {Route, Link} from 'react-router-dom'
 import SearchBook from './components/SearchBook'
-import CurrentlyReading from './components/CurrentlyReading'
-import WantToRead from './components/WantToRead'
 import Rating from './components/Rating'
-import Read from './components/Read'
+import BookShelf from './components/BookShelf'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 
@@ -25,9 +23,6 @@ class BooksApp extends React.Component {
     if (this.state.books) {
       searchedBooksOnShelf = this.state.books.filter((book) => book.id === id)
       if (searchedBooksOnShelf.length !== 0) {
-        // console.log(searchedBooksOnShelf)
-        // console.log(searchedBooksOnShelf[0])
-        // console.log(searchedBooksOnShelf[0].shelf)
         return searchedBooksOnShelf[0].shelf
       } else {
         return null
@@ -66,12 +61,27 @@ class BooksApp extends React.Component {
     }
 
     return (
+
       <div className="app">
-        <Route exact path="/" render={() => (<CurrentlyReading books={currentlyReading} onUpdateBook={this.updateBook}/>)}/>
-        <Route exact path="/" render={() => (<WantToRead books={wantToRead} onUpdateBook={this.updateBook}/>)}/>
-        <Route exact path="/" render={() => (<Read books={read} onUpdateBook={this.updateBook}/>)}/>
         <Route path="/search" render={() => (<SearchBook isBookOnShelf={this.isBookOnShelf} onUpdateBook={this.updateBook}/>)}/>
-        <Route path="/rating" render={() => (<Rating/>)}/>
+
+        <Route exact path="/" render={() => (
+          <div className="list-books">
+            <div className="list-books-title">
+              <h1>MyReads</h1>
+            </div>
+            <Link className="to-search" to="/search"></Link>
+            <div className="list-books-content">
+              <BookShelf books={currentlyReading} isBookOnShelf={this.isBookOnShelf} onUpdateBook={this.updateBook} title='Currently Reading'/>
+              <BookShelf books={wantToRead} isBookOnShelf={this.isBookOnShelf} onUpdateBook={this.updateBook} title='WantToRead'/>
+              <BookShelf books={read} isBookOnShelf={this.isBookOnShelf} onUpdateBook={this.updateBook} title='Read'/>
+              <Route path="/rating" render={() => (<Rating/>)}/>
+            </div>
+            <div className="open-search">
+              <Link className="to-search" to="/search">Add a book</Link>
+            </div>
+          </div>
+        )}/>
       </div>
     )
   }
