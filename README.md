@@ -5,6 +5,8 @@ This is a bookshelf app that allows you to select and categorize books you have 
 ### Dependencies
 - Please refer to package.json file. 
 
+### You can view it live here: https://ancient-tundra-21064.herokuapp.com/
+
 ### To run it locally
   - Clone or download this repository
   - run npm install
