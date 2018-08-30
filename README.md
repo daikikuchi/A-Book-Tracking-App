@@ -11,6 +11,8 @@ This is a bookshelf app using react that allows you to select and categorize boo
   - run npm start
   - Access it at http://localhost:3000/ to view the app.
 
+## View live version here: https://ancient-tundra-21064.herokuapp.com/
+
 ### App Functionality
 
 In this application, the main page displays a list of "shelves" (i.e. categories), each of which contains a number of books. The three shelves are:
